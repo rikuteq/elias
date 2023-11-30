@@ -79,6 +79,29 @@ def remove_vehicle():
     print(plates)
     input("Please press enter to continue...")
             
+# Function to display vehicles and write them to the vehicles.txt file
+def display_vehicles():
+    check_password()
+    if plates == []:
+        print("The parking lot is empty!")
+        input("Please press enter to continue...")
+        return
+    print(f"A list of registered vehicles for 2023-10-29\n{'=' *20}\n{'Plate':^20}\n{'='*20}")
+    x=0
+    while x < len(plates):
+        print(f"{plates[x]:^20}")
+        x+=1 
+        
+    print(f"{'='*20}")
+    y=0
+    with open("vehicles.txt","w") as wf:
+        wf.write("")
+    while y < len(plates):
+        with open("vehicles.txt","a") as f:
+            f.write(f"{plates[y]}\n")
+            y+=1
+    input("Please press enter to continue...")
+
 # Function to display charges and save everything to charges.txt file
 def display_charges():
     check_password()
@@ -111,6 +134,8 @@ class ParkingLot:
             with open("vehicles.txt","a") as f:   # Appends text to the text file
                 if plate not in open("vehicles.txt","r").read():   #  If the plate is not in the text file already, then it adds it otherwise it doesnt (to avoid repeating/duplicating plates)
                     f.write(f"{plate}" "\n")
+        with open("charges.txt", "w") as cf:
+            cf.write("")
         print("All vehicles cleared from the parking lot!")
         print("\nVehicles after been cleared:")   # Displaying vehicles after clearing
         print(plates)
@@ -128,7 +153,7 @@ def print_menu():
     elif option==2:
         verify_vehicle()   # Verify if a vehicle is registered or not
     elif option==3:
-        pass # Display registered vehicles and save them to a file
+        display_vehicles() # Display registered vehicles and save them to a file
     elif option==4:
         display_charges() # Display daily charges and save them to a file
     elif option==5:
